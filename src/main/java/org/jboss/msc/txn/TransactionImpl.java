@@ -26,7 +26,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import org.jboss.msc.Version;
 import org.jboss.msc._private.MSCLogger;
-import org.jboss.msc.value.Listener;
 
 import static java.lang.Math.min;
 import static java.lang.System.arraycopy;
