@@ -38,11 +38,12 @@ public interface ServiceTarget extends TaskTarget {
     /**
      * Gets a builder which can be used to add a service to this target.
      *
+     * @param container the service container
      * @param name the service name
      * @param service the service
      * @return the builder for the service
      */
-    <T> ServiceBuilder<T> addService(ServiceName name, Service<T> service);
+    <T> ServiceBuilder<T> addService(ServiceContainer container, ServiceName name, Service<T> service);
 
     /**
      * Adds a dependency that will be added to all ServiceBuilders installed in this target.
@@ -115,6 +116,13 @@ public interface ServiceTarget extends TaskTarget {
     public <T> void addDependency(ServiceName name, Injector<T> injector, DependencyFlag... flags);
 
     /**
+     * Remove all dependencies from this target.
+     *
+     * @return this target
+     */
+    ServiceTarget clearDependencies();
+
+    /**
      * Removes a dependency from this target.  Subsequently defined services will not have this dependency.
      *
      * @param dependency the dependency
@@ -135,11 +143,4 @@ public interface ServiceTarget extends TaskTarget {
      * @return the new service target
      */
     ServiceTarget subTarget();
-
-    /**
-     * Creates a new batch service target, which is used to install described services in this target.
-     *
-     * @return the new batch service target
-     */
-    BatchServiceTarget batchTarget();
 }
