@@ -41,6 +41,10 @@ final class ServiceContainerImpl implements ServiceContainer {
     private boolean shutdownCompleted;
     private boolean shutdownInitiated = false;
 
+    public ServiceRegistry getRegistry() {
+        throw new UnsupportedOperationException();
+    }
+
     public void start(final Transaction txn) {
         throw new UnsupportedOperationException();
     }
@@ -51,9 +55,7 @@ final class ServiceContainerImpl implements ServiceContainer {
 
     private class ShutdownTask implements Committable, Revertible {
 
-        @Override
         public void commit(CommitContext context) {
-            context.begin();
             try {
                 shutdownCompleted = true;
                 synchronized (shutDownLatches) {
@@ -66,9 +68,7 @@ final class ServiceContainerImpl implements ServiceContainer {
             }
         }
 
-        @Override
         public void rollback(RollbackContext context) {
-            context.begin();
             synchronized (ServiceContainerImpl.this) {
                 shutdownInitiated = false;
             }
